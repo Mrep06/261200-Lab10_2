@@ -1,0 +1,22 @@
+public class Lab10_2 {
+    public static void main(String[] args) {
+        // 1. สร้าง Object ของระบบเก่า
+        Xpay xpay = new XpayImpl();
+        xpay.setCreditCardNo("4789565874102365");
+        xpay.setCustomerName("Somchai Jaidee");
+        xpay.setCardExpMonth("09");
+        xpay.setCardExpYear("25");
+        xpay.setCardCVVNo((short) 235);
+        xpay.setAmount(2565.23);
+
+        // 2. ใช้ Adapter ห่อหุ้ม xpay ไว้ เพื่อให้ใช้งานผ่าน interface PayD ได้
+        PayD payD = new XpayToPayDAdapter(xpay);
+
+        // 3. ทดสอบการดึงข้อมูลผ่าน PayD (ซึ่งจะไปดึงจาก xpay มาแปลงให้อัตโนมัติ)
+        System.out.println("Credit Card Number: " + payD.getCreditCardNo());
+        System.out.println("Card Owner Name: " + payD.getCardOwnerName());
+        System.out.println("Card Expiry Date: " + payD.getCardExpMonthYear());
+        System.out.println("CVV: " + payD.getCVVNo());
+        System.out.println("Total Amount: " + payD.getTotalAmount());
+    }
+}
